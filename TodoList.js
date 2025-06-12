@@ -27,8 +27,20 @@ function handleSubmit (event){
         alert("Please provide a valid task")
         return
     }
-       alert("New Task: "+task)
+       setTodos([...todos,{task:task,completed:false}])
+
+      // alert("New Task: "+task)
 event.target.reset()
+}
+   function changeTaskStatus(index){
+    let newtodos=[...todos]
+    newtodos[index].completed=!newtodos[index].completed
+    setTodos(newtodos)
+}
+function deleteTask(index){
+    let newtodos=[...todos]
+    newtodos.splice(index,1)
+    setTodos(newtodos)
 }
 return(
     <div className="container my-5">
@@ -51,9 +63,18 @@ return(
                         style={{backgroundColor:todo.completed?"darkgrey":"lightgray"}}>
                             <div className="me-auto">
                                 {todo.task}
-                                </div>
-
+                          </div>
+                          <div className="me-5">
+                                    <i className={"h5 me-2"+(todo.completed? "bi bi-check-square":"bi bi-square")}
+                                    style={{cursor:"pointer"}}
+                                    onClick={()=> changeTaskStatus(index)}
+                                    ></i>
+                                    <i className="bi bi-trash text-danger h5"
+                                    style={{cursor:"pointer"}}
+                                    onClick={()=>deleteTask(index)}/>
+                                    </div>
                         </div>
+
 
                     )
                 })
